@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vijayan V — Semiconductor Process Integration</title>
+<meta name="description" content="Vijayan V — B.Tech ECE graduate working in semiconductor process integration, device simulation and TCAD.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#16202B;
+  --ink-soft:#4A5866;
+  --line:#D3D9DE;
+  --paper:#F4F6F7;
+  --card:#FFFFFF;
+  --amber:#C99700;      /* lithography bay light */
+  --silicon:#2B5F86;    /* wafer blue */
+  --maxw:1080px;
+}
+@media (prefers-color-scheme: dark){
+  :root{--ink:#E7ECF0;--ink-soft:#9FAEBC;--line:#2A3743;--paper:#0F1720;--card:#16212C;}
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:"IBM Plex Sans",-apple-system,Segoe UI,Roboto,sans-serif;
+  font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+a{color:inherit}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+
+/* ---- layer-stack rule: a device cross-section used as a divider ---- */
+.stack{height:10px;display:flex;margin:0}
+.stack i{flex:1}
+.stack i:nth-child(1){background:var(--silicon)}
+.stack i:nth-child(2){background:var(--amber)}
+.stack i:nth-child(3){background:#8C9AA6}
+.stack i:nth-child(4){background:var(--silicon);opacity:.45}
+
+/* ---- header ---- */
+header{padding:54px 0 34px}
+.idline{font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--ink-soft);letter-spacing:.02em}
+h1{font-size:clamp(34px,6vw,58px);line-height:1.04;margin:14px 0 10px;font-weight:700;letter-spacing:-.02em}
+.role{font-size:clamp(18px,2.6vw,22px);color:var(--ink-soft);margin:0 0 26px;max-width:38ch}
+.hero{display:grid;grid-template-columns:132px 1fr;gap:26px;align-items:start}
+.hero img{width:132px;height:132px;border-radius:50%;object-fit:cover;border:3px solid var(--card);box-shadow:0 0 0 1px var(--line)}
+@media(max-width:620px){.hero{grid-template-columns:1fr}.hero img{width:104px;height:104px}}
+
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+.btn{
+  display:inline-block;padding:11px 18px;border:1px solid var(--line);border-radius:3px;
+  background:var(--card);text-decoration:none;font-weight:600;font-size:15px;
+}
+.btn.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.btn:focus-visible,a:focus-visible,button:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+
+/* ---- sections ---- */
+section{padding:48px 0}
+h2{font-size:26px;margin:0 0 6px;letter-spacing:-.01em}
+.sub{color:var(--ink-soft);margin:0 0 26px;max-width:62ch}
+p{max-width:70ch}
+
+/* ---- carousel ---- */
+.showcase{background:var(--card);border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.tabs{display:flex;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.tab{
+  flex:1 1 220px;background:none;border:0;border-bottom:3px solid transparent;
+  padding:16px 18px;text-align:left;cursor:pointer;color:var(--ink-soft);
+  font:inherit;font-weight:600;font-size:15px;
+}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--amber);background:rgba(201,151,0,.07)}
+.tab span{display:block;font-weight:400;font-size:13px;font-family:"IBM Plex Mono",monospace;margin-top:3px}
+
+.slides{position:relative;aspect-ratio:16/9;background:#0D1620;overflow:hidden}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity .7s ease;display:flex;align-items:center;justify-content:center}
+.slide.on{opacity:1}
+.slide img{width:100%;height:100%;object-fit:contain;background:#0D1620}
+.ph{color:#7E8C99;font-family:"IBM Plex Mono",monospace;font-size:13px;text-align:center;padding:20px}
+.nav{position:absolute;top:50%;transform:translateY(-50%);border:0;background:rgba(13,22,32,.62);color:#fff;
+  width:40px;height:52px;cursor:pointer;font-size:20px;line-height:1}
+.nav.prev{left:0}.nav.next{right:0}
+.dots{display:flex;gap:8px;justify-content:center;padding:14px}
+.dot{width:9px;height:9px;border-radius:50%;border:1px solid var(--ink-soft);background:none;padding:0;cursor:pointer}
+.dot[aria-current="true"]{background:var(--amber);border-color:var(--amber)}
+.panelbody{padding:6px 24px 28px}
+.panelbody h3{margin:0 0 4px;font-size:20px}
+.meta{font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--ink-soft);margin:0 0 14px}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
+.chip{font-size:13px;font-family:"IBM Plex Mono",monospace;border:1px solid var(--line);padding:4px 9px;border-radius:2px;color:var(--ink-soft)}
+
+/* ---- project list ---- */
+.plist{display:grid;gap:0;border-top:1px solid var(--line)}
+.item{padding:22px 0;border-bottom:1px solid var(--line)}
+.item h3{margin:0 0 3px;font-size:18px}
+.item p{margin:8px 0 0;color:var(--ink-soft);font-size:16px}
+
+/* ---- skills ---- */
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:22px}
+.skillset h4{margin:0 0 8px;font-size:15px;font-family:"IBM Plex Mono",monospace;color:var(--silicon)}
+.skillset ul{margin:0;padding-left:18px;color:var(--ink-soft)}
+
+/* ---- contact ---- */
+#contact{background:var(--card);border-top:1px solid var(--line)}
+.clist{list-style:none;padding:0;margin:0;display:grid;gap:14px}
+.clist a{font-weight:600;text-decoration:none;border-bottom:2px solid var(--amber)}
+.clist small{display:block;font-family:"IBM Plex Mono",monospace;color:var(--ink-soft);font-size:12px}
+footer{padding:26px 0 44px;color:var(--ink-soft);font-size:14px}
+@media (prefers-reduced-motion: reduce){.slide{transition:none}}
+</style>
+</head>
+<body>
+
+<div class="stack"><i></i><i></i><i></i><i></i></div>
+
+<header>
+  <div class="wrap hero">
+    <img src="assets/img/profile.jpg" alt="Vijayan V">
+    <div>
+      <div class="idline">Chennai, Tamil Nadu · India</div>
+      <h1>Vijayan V</h1>
+      <p class="role">Semiconductor process integration, device simulation and TCAD. B.Tech ECE, SRM Institute of Science and Technology.</p>
+      <div class="actions">
+        <a class="btn primary" href="assets/files/Vijayan_V_Resume.pdf">Download resume</a>
+        <a class="btn" href="https://www.linkedin.com/in/vjnhere" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn" href="mailto:vjnhere@gmail.com">Email</a>
+        <a class="btn" href="https://wa.me/919790528750" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="wrap" id="about" style="padding-top:12px">
+  <h2>About</h2>
+  <p>I work on semiconductor device simulation and process integration. My research experience is in TCAD-based modelling and simulation with Silvaco ATLAS, and my project work covers full process flows — from unit steps like lithography, deposition, etching and implantation through to complete integration schemes in SEMulator3D.</p>
+  <p>I am looking for roles in process integration, fabrication, device simulation and semiconductor R&amp;D.</p>
+</section>
+
+<section class="wrap" id="work">
+  <h2>Process integration work</h2>
+  <p class="sub">Two self-driven projects, built to understand how a full flow holds together rather than as coursework.</p>
+
+  <div class="showcase">
+    <div class="tabs" role="tablist" aria-label="Featured projects">
+      <button class="tab" role="tab" id="t0" aria-controls="p0" aria-selected="true">Basic 3D NAND Flash Memory Process Integration<span>Nov 2025 · ~100 process steps</span></button>
+      <button class="tab" role="tab" id="t1" aria-controls="p1" aria-selected="false">Monolithic 3D (M3D) Integration of Logic and Memory<span>May 2025 · SEMulator3D</span></button>
+    </div>
+
+    <!-- Panel 0 -->
+    <div id="p0" role="tabpanel" aria-labelledby="t0" class="panel">
+      <div class="slides" data-carousel>
+        <div class="slide on"><img src="assets/projects/nand/1.png" alt="3D NAND process integration — step 1" onerror="this.parentNode.innerHTML='&lt;div class=ph&gt;assets/projects/nand/1.png&lt;/div&gt;'"></div>
+        <div class="slide"><img src="assets/projects/nand/2.png" alt="3D NAND process integration — step 2" onerror="this.parentNode.innerHTML='&lt;div class=ph&gt;assets/projects/nand/2.png&lt;/div&gt;'"></div>
+        <div class="slide"><img src="assets/projects/nand/3.png" alt="3D NAND process integration — step 3" onerror="this.parentNode.innerHTML='&lt;div class=ph&gt;assets/projects/nand/3.png&lt;/div&gt;'"></div>
+        <button class="nav prev" aria-label="Previous image">‹</button>
+        <button class="nav next" aria-label="Next image">›</button>
+      </div>
+      <div class="dots"></div>
+      <div class="panelbody">
+        <h3>Basic 3D NAND Flash Memory Process Integration and Industry Insights</h3>
+        <p class="meta">SRMIST · Nov 2025</p>
+        <p>A conceptual fabrication flow of close to 100 process steps: substrate formation, alternating oxide–nitride stacking, high-aspect-ratio channel hole etching, charge-trap layer formation, and final metallization and passivation. Each stage was simulated to see how vertical integration gets past the scaling limits of planar NAND.</p>
+        <p>Alongside the flow, I studied the industry side — the move from the first 24-layer V-NAND to 230+ layer devices, the competing architectures (TCAT, Replacement Gate, BiCS, P-BiCS, Xtacking), and the cost–yield–performance trade-offs behind them, grounded in IEDM and VLSI Symposium papers.</p>
+        <div class="chips"><span class="chip">SEMulator3D</span><span class="chip">Virtual fabrication</span><span class="chip">Process integration</span></div>
+      </div>
+    </div>
+
+    <!-- Panel 1 -->
+    <div id="p1" role="tabpanel" aria-labelledby="t1" class="panel" hidden>
+      <div class="slides" data-carousel>
+        <div class="slide on"><img src="assets/projects/m3d/1.png" alt="M3D integration — step 1" onerror="this.parentNode.innerHTML='&lt;div class=ph&gt;assets/projects/m3d/1.png&lt;/div&gt;'"></div>
+        <div class="slide"><img src="assets/projects/m3d/2.png" alt="M3D integration — step 2" onerror="this.parentNode.innerHTML='&lt;div class=ph&gt;assets/projects/m3d/2.png&lt;/div&gt;'"></div>
+        <div class="slide"><img src="assets/projects/m3d/3.png" alt="M3D integration — step 3" onerror="this.parentNode.innerHTML='&lt;div class=ph&gt;assets/projects/m3d/3.png&lt;/div&gt;'"></div>
+        <button class="nav prev" aria-label="Previous image">‹</button>
+        <button class="nav next" aria-label="Next image">›</button>
+      </div>
+      <div class="dots"></div>
+      <div class="panelbody">
+        <h3>Monolithic 3D (M3D) Integration of Logic and Memory Devices — Process Simulation</h3>
+        <p class="meta">SRMIST · May 2025</p>
+        <p>Before the integration, I worked through each unit process on its own — lithography, deposition, etching, implantation, planarization and metallization. On that base I designed and simulated a monolithic 3D IC combining a NAND-gate logic layer with a simple memory layer in SEMulator3D.</p>
+        <p>The flow covers wafer preparation, bottom-tier logic fabrication, inter-tier bonding, top-tier memory fabrication and final metallization, referencing published work on 3D IC integration and TSV-based design throughout.</p>
+        <div class="chips"><span class="chip">SEMulator3D</span><span class="chip">3D IC</span><span class="chip">TSV</span><span class="chip">Unit processes</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap" id="projects">
+  <h2>Other projects</h2>
+  <div class="plist">
+    <div class="item">
+      <h3>Simulation and characterization of a ZnO-based perovskite solar cell for tandem device design</h3>
+      <p class="meta">SRMIST · Jan 2026 – May 2026 · Silvaco ATLAS TCAD</p>
+      <p>Simulated a ZnO-based perovskite cell to study electron transport layer architectures, defect density, doping concentration and nanorod dimensions against Voc, Jsc, fill factor and power conversion efficiency, including carrier transport, band alignment and recombination.</p>
+    </div>
+    <div class="item">
+      <h3>LoRa-based underground mine environment monitoring and alert system</h3>
+      <p class="meta">SRMIST · Apr 2025</p>
+      <p>Transmitter unit inside the mine with MQ135 and MQ4 gas sensors, GPS and an RTC for IST timestamping; threshold crossings trigger a local buzzer and a LoRa link to the surface, where a GSM receiver sends an SMS and places an automated call with location and time.</p>
+    </div>
+    <div class="item">
+      <h3>Smart wearable band for real-time health monitoring</h3>
+      <p class="meta">SRMIST · Oct 2024 – Dec 2024</p>
+      <p>ECG and gyroscope data streamed to the cloud over an ESP32. Rebuilt from a breadboard prototype into a hand-wired fabric band with a zip opening and an adjustable strap, working live during the showcase.</p>
+    </div>
+    <div class="item">
+      <h3>IoT-based hydroponic monitoring system for holy basil</h3>
+      <p class="meta">SRMIST · Sep 2024 – Nov 2024</p>
+      <p>ESP32 controller tracking water quality, pH, temperature and lighting with TDS, pH, temperature and RGB sensors, an ESP32-CAM streaming plant images to ThingSpeak, and a pump cycling every two minutes to keep the nutrient solution oxygenated.</p>
+    </div>
+  </div>
+</section>
+
+<section class="wrap" id="skills">
+  <h2>Tools and skills</h2>
+  <div class="grid3">
+    <div class="skillset">
+      <h4>Simulation</h4>
+      <ul><li>Silvaco ATLAS TCAD</li><li>SEMulator3D</li><li>Device modelling</li><li>Virtual fabrication</li></ul>
+    </div>
+    <div class="skillset">
+      <h4>Process</h4>
+      <ul><li>Process integration</li><li>Semiconductor fabrication</li><li>Microfabrication</li><li>Cleanroom practices</li><li>Semiconductor packaging</li></ul>
+    </div>
+    <div class="skillset">
+      <h4>Devices</h4>
+      <ul><li>Semiconductor physics</li><li>CMOS technology</li><li>VLSI</li><li>Thin-film technologies</li></ul>
+    </div>
+    <div class="skillset">
+      <h4>Computing</h4>
+      <ul><li>Python (NumPy, Pandas)</li><li>MATLAB</li><li>LaTeX</li><li>Embedded systems, IoT</li></ul>
+    </div>
+  </div>
+</section>
+
+<section class="wrap" id="background">
+  <h2>Background</h2>
+  <div class="plist">
+    <div class="item">
+      <h3>B.Tech, Electronics and Communication Engineering — SRMIST</h3>
+      <p class="meta">Sep 2022 – May 2026 · Grade 8.17</p>
+      <p>Focus on semiconductor devices, VLSI and embedded systems, with device simulation research in Silvaco ATLAS leading to IEEE-published work.</p>
+    </div>
+    <div class="item">
+      <h3>Data Analytics Intern — C-DAC Chennai</h3>
+      <p class="meta">Jun 2024 – Jul 2024</p>
+      <p>Data preprocessing, visualization and analysis in Python.</p>
+    </div>
+    <div class="item">
+      <h3>Certifications</h3>
+      <p class="meta">Selected</p>
+      <p>Summer Training &amp; Internship Program in Semiconductor Technology, E&amp;ICT Academy IIT Roorkee (Aug 2026) · CeNSE Winter School on Semiconductor Technology 2025, Certificate of Distinction, IISc Bengaluru (Dec 2025) · VLSI Design Engineer, ESSCI, NSQF Level 5 (Apr 2025).</p>
+    </div>
+  </div>
+</section>
+
+<div class="stack"><i></i><i></i><i></i><i></i></div>
+
+<section id="contact">
+  <div class="wrap">
+    <h2>Contact</h2>
+    <p class="sub">Happy to talk about process integration, TCAD or anything on this page.</p>
+    <ul class="clist">
+      <li><a href="mailto:vjnhere@gmail.com">vjnhere@gmail.com</a><small>Email</small></li>
+      <li><a href="tel:+919790528750">+91 97905 28750</a><small>Phone · WhatsApp</small></li>
+      <li><a href="https://www.linkedin.com/in/vjnhere" target="_blank" rel="noopener">linkedin.com/in/vjnhere</a><small>LinkedIn</small></li>
+      <li><a href="assets/files/Vijayan_V_Resume.pdf">Resume (PDF)</a><small>Download</small></li>
+    </ul>
+  </div>
+  <div class="wrap"><footer>Vijayan V · Chennai, India</footer></div>
+</section>
+
+<script>
+// ---- tabs ----
+const tabs=[...document.querySelectorAll('.tab')];
+tabs.forEach((t,i)=>t.addEventListener('click',()=>{
+  tabs.forEach((x,j)=>{
+    x.setAttribute('aria-selected',String(i===j));
+    document.getElementById('p'+j).hidden=(i!==j);
+  });
+}));
+
+// ---- carousels (auto-sliding, pause on hover/focus) ----
+document.querySelectorAll('[data-carousel]').forEach(box=>{
+  const slides=[...box.querySelectorAll('.slide')];
+  const dotbar=box.parentNode.querySelector('.dots');
+  let i=0,timer=null;
+  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  slides.forEach((_,n)=>{
+    const d=document.createElement('button');
+    d.className='dot';d.type='button';
+    d.setAttribute('aria-label','Image '+(n+1));
+    d.addEventListener('click',()=>{go(n);restart();});
+    dotbar.appendChild(d);
+  });
+  const dots=[...dotbar.children];
+
+  function go(n){
+    i=(n+slides.length)%slides.length;
+    slides.forEach((s,k)=>s.classList.toggle('on',k===i));
+    dots.forEach((d,k)=>d.setAttribute('aria-current',String(k===i)));
+  }
+  function start(){ if(!reduce && !timer) timer=setInterval(()=>go(i+1),3500); }
+  function stop(){ clearInterval(timer); timer=null; }
+  function restart(){ stop(); start(); }
+
+  box.querySelector('.prev').addEventListener('click',()=>{go(i-1);restart();});
+  box.querySelector('.next').addEventListener('click',()=>{go(i+1);restart();});
+  box.addEventListener('mouseenter',stop);
+  box.addEventListener('mouseleave',start);
+  box.addEventListener('focusin',stop);
+  box.addEventListener('focusout',start);
+
+  // swipe on touch
+  let x0=null;
+  box.addEventListener('touchstart',e=>{x0=e.touches[0].clientX;stop();},{passive:true});
+  box.addEventListener('touchend',e=>{
+    if(x0===null)return;
+    const dx=e.changedTouches[0].clientX-x0;
+    if(Math.abs(dx)>40) go(dx<0?i+1:i-1);
+    x0=null;start();
+  });
+
+  go(0);start();
+});
+</script>
+</body>
+</html>
